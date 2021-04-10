@@ -1,38 +1,89 @@
+:root {
+  --oxfordBlueDk: #021027;
+  --oxfordBlue: #031d44;
+  --indigoDye: #04395e;
+  --airSuperiorityBlue: #6595af;
+  --blizzardBlue: #c5f1ff;
+  --slimyGreen: #2f9931;
+  --limeGreen: #3ae01d;
+  --lightGreen: #82eb6f;
+}
+
+body {
+  background-color: var(--oxfordBlueDk);
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--slimyGreen);
+  padding: 0.5%;
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--limeGreen);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20% 0 20% 5%;
+  background: var(--oxfordBlue);
+  z-index: 10;
+}
+
+.nav-wrapper a {
+  display: block;
+  text-align: left;
+  font-size: 4rem;
+  color: var(--lightGreen);
+  text-decoration: none;
+  transition: 0.3s ease border;
+  border-bottom: solid 4px transparent;
+}
+
+.nav-wrapper a:hover {
+  border-bottom: solid 4px var(--airSuperiorityBlue);
+}
+
+.menu-button {
+  float: right;
+  appearance: none;
+  border: solid 1px transparent;
+  color: var(--lightGreen);
+  font-weight: bold;
+  font-size: 2rem;
+  background: transparent;
+  z-index: 15;
+  width: 10%;
+}
+
+h1 {
+  color: var(--lightGreen);
+}
+
+.checkout {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+}
+.checkout-left {
+  width: 30%;
+  height: 100%;
+  background: var(--indigoDye);
+}
+.checkout-right {
+  width: 70%;
+  height: 100%;
+  background: var(--slimyGreen);
 }
