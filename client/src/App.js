@@ -1,42 +1,106 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardGrid, Container, Header } from './Elements';
-import blue from './imgs/blue.png';
-import purp from './imgs/purp.png';
-import black from './imgs/black.png';
-import green from './imgs/green.png';
+import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
+import { Card, CardGrid, Container, Header, MenuButton} from './components/Elements';
+import blue from './components/imgs/blue.png';
+import purp from './components/imgs/purp.png';
+import black from './components/imgs/black.png';
+import green from './components/imgs/green.png';
 import Menu from './Menu';
+import Modal from './components/Modal';
+import Accordion from './components/Accordion';
+import Nav from './components/Nav';
 import './App.css';
 
 const App = () => {
     const [value, setValue ] = useState(0);
+    const [isToggled, setToggle] = useState(false);
+    const [isNavOpen, setIsNavOpen] = useState(false);
+    const [isCardActive, setIsCardActive] = useState(true);
+
+    const x = useMotionValue(0);
+    const opacity = useTransform(x, [-200, 0, 200], [0, 1, 0]);
 
     return (
-        <motion.div initial={{ opacity: 0, x: 200, y:200}} animate={{ opacity: 1, x:0, y:0 }} transition={{ duration: 1 }}>
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }} 
+            transition={{ duration: 1 }}>
             <Header>
-                <Menu />
-                <h1 style={{ color: "var(--lightGreen)"}}>Header</h1>
+                <MenuButton onClick={() => setIsNavOpen(true)} >
+                    <Menu />
+                </MenuButton>
+                <Nav isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+                <h1>Header</h1>
             </Header>
             <Container>
-                <motion.h2 style={{ color: "var(--lightGreen)"}} animate={{y: value + "px"}}>
-                    Super Cool
-                    </motion.h2>
-                <input type="range" min="-300" max="100" value={value} onChange={(e) => setValue(e.target.value)} />
-
+                
+                <h2 style={{ color: "var(--slimyGreen)"}}>Super Cool</h2>
+                <button onClick={() => setToggle(true)}>
+                    Toggle
+                </button>
+                <Accordion />
                 <CardGrid>
-                    <Card style={{ background: "var(--oxfordBlue)" }}>
-                        <h3>Some Card</h3>
+                    <Modal isToggled={isToggled} setToggle={setToggle}>
+                        <Card style={{ background: "var(--oxfordBlue)" }}>
+                            <h3>Some Card</h3>
+                            <img src={black} />
+                        </Card>
+                    </Modal>
+                    <Card 
+                        drag
+                        dragConstraints={{
+                            top: -100,
+                            left: -100,
+                            bottom: 100,
+                            right: 100
+                        }}
+                        style={{ background: "var(--oxfordBlue)" }}>
+                        <h3>This Card</h3>
                         <img src={purp} />
                     </Card>
-                    <Card style={{ background: "var(--oxfordBlue)" }}>
-                        <h3>Some Card</h3>
-                        <img src={blue} />
-                    </Card>
-                    <Card style={{ background: "var(--oxfordBlue)" }}>
+                    <AnimatePresence>
+                        {
+                            isCardActive && (
+                                <motion.div exit={{ height: 0, overflow: "hidden", opacity: 0 }}
+                                transition={{
+                                    opacity: {
+                                        duration: 0
+                                    }
+                                }}>
+                            <Card onDragEnd={(event, info) => {
+                                if(Math.abs(info.point.x)>200) {
+                                    setIsCardActive(false);
+                                }
+                            }}
+                                drag="x"
+                                dragConstraints={{
+                                    left: 0,
+                                    right: 0
+                                }}
+                                style={{ 
+                                    x,
+                                    opacity, 
+                                    background: "var(--oxfordBlue)" }}>
+                                <h3>Some Card</h3>
+                                <img src={blue} />
+                            </Card>
+                                </motion.div>
+                            )
+                        }
+                    </AnimatePresence>
+                    <Card 
+                        whileHover={{ scale: [1.02, 0.8, 1.2], background: "var(--slimyGreen)"}}
+                        whileTap={{ background: "var(--airSuperiorityBlue)"}}
+                        onHoverEnd={() => console.log("hover end")}
+                        style={{ background: "var(--oxfordBlue)" }}>
                         <h3>Some Card</h3>
                         <img src={black} />
                     </Card>
-                    <Card style={{ background: "var(--oxfordBlue)" }}>
+                    <Card 
+                        whileHover={{ scale: [1.02, 0.8, 1.2], background: "var(--slimyGreen)"}}
+                        whileTap={{ background: "var(--airSuperiorityBlue)"}}
+                        onHoverEnd={() => console.log("hover end")}
+                        style={{ background: "var(--oxfordBlue)" }}>
                         <h3>Some Card</h3>
                         <img src={green} />
                     </Card>
