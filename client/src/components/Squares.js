@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { shuffle } from 'loadash';
+import { shuffle } from 'lodash';
 
 const COLORS = [
     "var(--oxfordBlueDk)",
@@ -18,7 +18,7 @@ const Squares = () => {
     const [colorsList, setColorsList] = useState(COLORS);
     return (
         <div>
-            <button onClick={() => setColorsList(shuffle(colorList))}>
+            <button onClick={() => setColorsList(shuffle(colorsList))}>
                 Shuffle
             </button>
             {colorsList.map(color => (

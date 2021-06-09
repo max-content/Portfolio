@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
-// import { Router, Link } from '@reach/router';
+import { Router, Link } from '@reach/router';
 import Close from './imgs/Close';
 import { MenuButton } from './Elements';
 
@@ -40,7 +40,23 @@ const liVariants = {
     }
 };
 
-const links = ["Home", "About", "Portfolio", "Contact"];
+const links = [ "about", "portfolio", "contact"];
+
+const NavLink = props => (
+    <Link
+      {...props}
+      getProps={({ isCurrent }) => {
+        // the object returned here is passed to the
+        // anchor element's props
+        return {
+          style: {
+            borderBottom: isCurrent ? "solid 4px var(--airSuperiorityBlue)" : "none"
+          }
+        };
+      }}
+    />
+  );
+
 
 const Nav = ({ isNavOpen, setIsNavOpen }) => {
     return (
@@ -49,17 +65,18 @@ const Nav = ({ isNavOpen, setIsNavOpen }) => {
             initial="closed"
             animate={isNavOpen ? "open" : "closed"}
             transition={{ damping: 300 }}
-            >
+        >
                 <MenuButton style={{height: "61px", marginLeft: "-100px", marginTop: "-145px"}} onClick={() => setIsNavOpen(false)}>
                     <Close />
                 </MenuButton>
                 <motion.ul variants={ulVariants}>
                     {links.map(link => (
                         <motion.li variants={liVariants} key={link}>
-                            <a href="x">{link}</a>
+                                <NavLink to={link}> {link} </NavLink>
                         </motion.li>
                     ))}
                 </motion.ul>
+
         </MenuNav>
     );
 };
@@ -93,7 +110,7 @@ const MenuNav = styled(motion.nav)`
             border-bottom: solid 4px transparent;
         }
         a:hover {
-            border-bottom: solid 4px var(--airSuperiorityBlue);
+            border-bottom: solid 4px var(--airSuperiorityBlue) !important;
         }
     }
 `;
