@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 export const Header = styled.header`
     background: var(--oxfordBlue);
     color: var(--blizzardBlue);
+    height: 400px;
     padding: 20px;
     display: flex;
     > svg {
@@ -20,7 +21,7 @@ export const Header = styled.header`
 export const Container = styled.div`
     width: 95%;
     max-width: 600px;
-    margin: 0 auto;
+    margin-left: 15px;
     padding-bottom: 60px;
     h2 {
         color: var(--slimyGreen);
@@ -57,7 +58,6 @@ export const Paragraph = styled.div`
     padding-top: -50px;
     padding: 25px;
     margin-top: 5px;
-    z-index: 1;
 `;
 
 export const MenuButton = styled.div`
